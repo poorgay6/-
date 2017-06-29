@@ -1,0 +1,385 @@
+
+<head>
+<title>无标题文档</title>
+<style type="text/css">
+#customers
+  {
+  font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+  width:100%;
+  border-collapse:collapse;
+  }
+
+#customers td, #customers th 
+  {
+  font-size:1em;
+  border:1px solid #98bf21;
+  padding:3px 7px 2px 7px;
+  }
+
+#customers th 
+  {
+  font-size:1.1em;
+  text-align:left;
+  padding-top:5px;
+  padding-bottom:4px;
+  background-color:#A7C942;
+  color:#ffffff;
+  }
+
+#customers tr.alt td 
+  {
+  color:#000000;
+  background-color:#EAF2D3;
+  }
+#black {
+    background-color:black;
+    color:white;
+    margin:1px;
+    padding:1px;
+}
+#green
+{
+	background-color:#C0C0C0;
+    color:white;
+    margin:1px;
+    padding:1px;
+	}
+</style>
+</head>
+
+<body bgcolor="#d0d0d0">
+<div id="black">
+<h1 align="center">咸鱼租车网</h1>
+</div>
+<p>//查询模块</p>
+<div id="black">
+<input name="keyword" type="text" id="keyword" />
+<select name="lx" id="lx">
+  <option value="1">车辆信息</option>
+  <option value="2">车型信息</option>
+  <option value="3">门店信息</option>
+  <option value="4">职工信息</option>
+  <option value="5">客户信息</option>
+  <option value="6">租赁信息</option>
+  <option value="7">续租信息</option>
+  <option value="8">驾驶员信息</option>
+  <option value="9">违章信息</option>
+</select>
+<input name="sumb" type="button" id="sumb" value="查询" />
+</div>
+
+<p>//更新模块</p>
+<div id="green">
+<p>更新车辆信息：</p>
+<form action="/demo/demo_form.asp" method="post" target="_blank">
+车辆ID:<br>
+<input id="input1" type="text" name="车辆ID" value=""/>
+<br>
+车牌号码:<br>
+<input id="input2" type="text" name="车牌号码" value=""/>
+<br>
+发动机号：<br>
+<input id="input3" type="text" name="发动机号" value=""/>
+<br>
+车架编号：<br>
+<input id="input4" type="text" name="车架编号" value=""/>
+<br>
+<p>ba bla bla</p>
+<input type="submit" value="Submit"/>
+
+</form> 
+<script type="text/javascript">
+var myInput=document.getElementsByTagName('input');
+var arr=[];
+for(var i=0;i<myInput.length;i++){
+     //取id为键，value为值
+  //拼接后类似：'input11':'value……'
+  arr.push(myInput[i].id+":'"+myInput[i].value+"'");
+}
+//将数组以逗号分隔成字符串，然后在两头加上花括号
+//拼接后类似：{''input11':'value……',''input22':'value……',''input33':'value……',……}
+//再加小括号（很重要）后类似：({''input11':'value……',''input22':'value……',''input33':'value……',……})
+//然后用eval()函数运算一下，
+//如果拼接的没有问题的话，结果就是Json格式了
+var myJson=eval("({"+arr.join(",")+"})");
+alert(myJson.input2);
+</script>
+</div>
+
+<div>
+<p>//添加订单模块</p>
+<p>续租订单:</p>
+<table id="customers"  contentEditable="true">
+  <tr>
+    <th scope="col">订单ID</th>
+    <th scope="col">订单号</th>
+    <th scope="col">续租开始时间</th>
+    <th scope="col">归还时间</th>
+    <th scope="col">职工ID</th>
+    <th scope="col">创建时间</th>
+    <th scope="col">删除标记位</th>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr class="alt">
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr class="alt">
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<p>租赁信息订单:</p>
+<table id="customers" contentEditable="true">
+  <tr>
+    <th scope="col">订单ID</th>
+    <th scope="col">订单号</th>
+    <th scope="col">客户ID</th>
+    <th scope="col">驾驶员ID</th>
+    <th scope="col">车辆编号</th>
+    <th scope="col">车型编号</th>
+    <th scope="col">租车日期</th>
+    <th scope="col">预计还车日期</th>
+    <th scope="col">实际还车日期</th>
+    <th scope="col">车辆初始里程</th>
+    <th scope="col">车辆归还里程</th>
+    <th scope="col">实交押金违章</th>
+    <th scope="col">实交使用押金</th>
+    <th scope="col">实交车损押金</th>
+    <th scope="col">实交超时费用</th>
+    <th scope="col">实交超公里费用</th>
+    <th scope="col">违章处理费用</th>
+    <th scope="col">使用费用</th>
+    <th scope="col">总费用</th>
+    <th scope="col">职工ID</th>
+    <th scope="col">创建时间</th>
+    <th scope="col">删除标记位</th>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr class="alt">
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr class="alt">
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+
+<p>违章信息:</p>
+<table width="500" border="1" cellspacing="0" cellpadding="0" id="customers">
+  <tr>
+    <th scope="col">违章ID</th>
+    <th scope="col">车牌号码</th>
+    <th scope="col">违法代码</th>
+    <th scope="col">违法时间</th>
+    <th scope="col">违法内容</th>
+    <th scope="col">违章处理费用</th>
+    <th scope="col">职工ID</th>
+    <th scope="col">创建时间</th>
+    <th scope="col">删除标记位</th>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+
+
+
+
+
+
+</div>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
