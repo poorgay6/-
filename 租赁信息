@@ -1,0 +1,154 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using System.Data.SqlClient;
+
+namespace UIL.租赁信息
+{
+    public partial class 租赁信息 : Form
+    {
+        public 租赁信息()
+        {
+            InitializeComponent();
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = "Data Source=(local),1433;Initial Catalog=租车管理系统;Trusted_connection=yes";
+            con.Open();
+            SqlCommand com = new SqlCommand();
+            com.Connection = con;
+            com.CommandType = CommandType.Text;
+            SqlDataAdapter da = new SqlDataAdapter();//实例化sqldataadpter
+            //DataSet ds1 = new DataSet();//实例化dataset
+            DataTable dt = new DataTable();
+            com.CommandText = "select 订单号,租车日期,预计还车日期,门店ID,创建时间,车辆编号,车型编号 from 租赁信息 where 订单状态='在预约'";
+            da.SelectCommand = com;//设置为已实例化SqlDataAdapter的查询命令
+            da.Fill(dt);
+            dataGridView1.DataSource = dt;
+            con.Close();
+            button5.Enabled = false;
+          
+        }
+        public DataTable d()
+        {
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = "Data Source=(local),1433;Initial Catalog=租车管理系统;Trusted_connection=yes";
+            con.Open();
+            SqlCommand com = new SqlCommand();
+            com.Connection = con;
+            com.CommandType = CommandType.Text;
+            com.CommandText = "select distinct 职工ID from 职工信息";
+            SqlDataAdapter da = new SqlDataAdapter();//实例化sqldataadpter            
+            da.SelectCommand = com;//设置为已实例化SqlDataAdapter的查询命令
+            DataSet ds1 = new DataSet();//实例化dataset
+            da.Fill(ds1);//把数据填充到dataset
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            con.Close();
+            return dt;
+        }
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            button5.Enabled = true;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = "Data Source=(local),1433;Initial Catalog=租车管理系统;Trusted_connection=yes";
+            con.Open();
+            SqlCommand com = new SqlCommand();
+            com.Connection = con;
+            com.CommandType = CommandType.Text;
+            SqlDataAdapter da = new SqlDataAdapter();//实例化sqldataadpter
+            //DataSet ds1 = new DataSet();//实例化dataset
+            DataTable dt = new DataTable();
+            com.CommandText = "select * from 租赁信息 where 订单号='" + textBox1.Text + "'";
+            da.SelectCommand = com;//设置为已实例化SqlDataAdapter的查询命令
+            da.Fill(dt);
+            {
+                textBox4.Text = dt.Rows[0]["订单号"].ToString();
+                textBox5.Text = dt.Rows[0]["客户ID"].ToString();
+                textBox7.Text = dt.Rows[0]["车辆编号"].ToString();
+                textBox3.Text = dt.Rows[0]["车型编号"].ToString();
+                textBox10.Text = dt.Rows[0]["门店ID"].ToString();
+                dateTimePicker2.Value = DateTime.Parse(dt.Rows[0]["租车日期"].ToString());
+                dateTimePicker1.Value = DateTime.Parse(dt.Rows[0]["预计还车日期"].ToString());
+            }
+          
+            con.Close();
+        }
+
+      
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = "Data Source=(local),1433;Initial Catalog=租车管理系统;Trusted_connection=yes";
+            con.Open();
+            SqlCommand com = new SqlCommand();
+            com.Connection = con;
+            com.CommandType = CommandType.Text;
+            com.CommandText = "select 车型信息.*,车辆初始里程 from 车型信息,车辆信息  where 车型信息.车型='" + textBox3.Text + "'and 车辆ID='" + textBox7.Text + "'";
+            SqlDataAdapter da = new SqlDataAdapter();//实例化sqldataadpter            
+            da.SelectCommand = com;//设置为已实例化SqlDataAdapter的查询命令
+            DataSet ds1 = new DataSet();//实例化dataset
+            da.Fill(ds1);//把数据填充到dataset
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                textBox8.Text = dr[11].ToString();
+                textBox9.Text = dr[10].ToString();
+                textBox6.Text = dr[9].ToString();
+                textBox11.Text = dr[5].ToString();
+                textBox19.Text = dr[13].ToString();
+
+
+            }
+        }
+
+        private void 租赁信息_Load(object sender, EventArgs e)
+        {
+            comboBox1.DataSource = d();
+            comboBox1.DisplayMember = "职工ID";
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (textBox4.Text == "" || textBox2.Text == "" || textBox7.Text == "")
+            {
+                MessageBox.Show("请录入全部信息！");
+            }
+            else
+            {
+                SqlConnection con = new SqlConnection();
+                con.ConnectionString = "Data Source=(local),1433;Initial Catalog=租车管理系统;Trusted_connection=yes";
+                con.Open();
+                SqlCommand com = new SqlCommand();
+                com.Connection = con;
+                com.CommandType = CommandType.Text;
+                SqlDataAdapter da = new SqlDataAdapter();//实例化sqldataadpter
+                //DataSet ds1 = new DataSet();//实例化dataset
+                DataTable dt = new DataTable();
+
+                string sql = "update 租赁信息 set 订单状态='使用中',驾驶员ID=" + textBox2.Text + ",车辆编号='" + textBox7.Text + "',租车日期='" + dateTimePicker2.Value +
+                               "',预计还车日期='" + dateTimePicker1.Value + "',实交车损押金=" + textBox6.Text + ",实交使用押金=" + textBox8.Text + ",实交违章押金=" + textBox9.Text + ",日租金=" +
+                               textBox11.Text + " where 订单号='" + textBox4.Text + "'";
+                SqlCommand com2 = new SqlCommand(sql, con);
+                com2.ExecuteNonQuery();
+                con.Close();
+                MessageBox.Show("保存成功！");
+            }
+        }
+
+       
+
+        }
+      
+       
+    }
+
