@@ -1,0 +1,73 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using System.Data.SqlClient;
+
+namespace UIL.车型信息
+{
+    public partial class 查看车型信息 : Form
+    {
+        public 查看车型信息()
+        {
+            InitializeComponent();
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = "Data Source=(local),1433;Initial Catalog=租车管理系统;Trusted_connection=yes";
+            con.Open();
+            SqlCommand com = new SqlCommand();
+            com.Connection = con;
+            com.CommandType = CommandType.Text;
+            SqlDataAdapter da = new SqlDataAdapter();//实例化sqldataadpter
+            DataSet ds1 = new DataSet();//实例化dataset
+            DataTable dt = new DataTable();
+            com.CommandText = "select 车型 from 车型信息";
+            da.SelectCommand = com;//设置为已实例化SqlDataAdapter的查询命令            
+            da.Fill(ds1);//把数据填充到dataset            
+            da.Fill(dt);
+            dataGridView1.DataSource = dt;
+            con.Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = "Data Source=(local),1433;Initial Catalog=租车管理系统;Trusted_connection=yes";
+            con.Open();
+            SqlCommand com = new SqlCommand();
+            com.Connection = con;
+            com.CommandType = CommandType.Text;
+            com.CommandText = "select * from 车型信息  where 车型='" + textBox1.Text + "'";
+            SqlDataAdapter da = new SqlDataAdapter();//实例化sqldataadpter            
+            da.SelectCommand = com;//设置为已实例化SqlDataAdapter的查询命令
+            DataSet ds1 = new DataSet();//实例化dataset
+            da.Fill(ds1);//把数据填充到dataset
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                textBox2.Text = dr[1].ToString();
+                textBox4.Text = dr[2].ToString();
+                textBox8.Text = dr[3].ToString();
+                textBox7.Text = dr[4].ToString();
+                textBox6.Text = dr[5].ToString();
+                textBox5.Text = dr[6].ToString();
+                textBox3.Text = dr[7].ToString();
+                textBox9.Text = dr[8].ToString();
+                textBox10.Text = dr[10].ToString();
+                textBox11.Text = dr[11].ToString();
+                textBox12.Text = dr[12].ToString();
+
+            }
+          
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+    }
+}
