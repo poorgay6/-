@@ -1,0 +1,48 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using System.Data.SqlClient;
+
+namespace UIL.车辆信息
+{
+    public partial class 添删车辆信息 : Form
+    {
+        public 添删车辆信息()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = "Data Source=(local),1433;Initial Catalog=租车管理系统;Trusted_connection=yes";
+            con.Open();
+            SqlCommand com = new SqlCommand();
+            com.Connection = con;
+            com.CommandType = CommandType.Text;
+            com.CommandText = "insert into 车辆信息 values('','" + textBox1.Text + "','" + textBox2.Text + "','" + textBox8.Text + "','" + textBox7.Text + "','" + textBox6.Text + "','" + textBox5.Text + "','" + textBox3.Text + "','" + textBox9.Text + "','" + textBox10.Text + "','" + textBox11.Text + "','0')";
+            com.ExecuteNonQuery();
+            MessageBox.Show("添加车辆成功！");
+            con.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = "Data Source=(local),1433;Initial Catalog=租车管理系统;Trusted_connection=yes";
+            con.Open();
+            SqlCommand com = new SqlCommand();
+            com.Connection = con;
+            com.CommandType = CommandType.Text;
+            com.CommandText = "delete from 车辆信息 where 车牌号码='" + textBox1.Text + "'";
+            com.ExecuteNonQuery();
+            MessageBox.Show("已删除车辆" + textBox1.Text + "！");
+            con.Close();
+        }
+    }
+}
