@@ -1,0 +1,34 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using System.Data.SqlClient;
+
+namespace UIL.客户信息
+{
+    public partial class 修改客户信息 : Form
+    {
+        public 修改客户信息()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = "Data Source=(local),1433;Initial Catalog=租车管理系统;Trusted_connection=yes";
+            con.Open();
+            SqlCommand com = new SqlCommand();
+            com.Connection = con;
+            com.CommandType = CommandType.Text;
+            com.CommandText = "update 客户信息 set 客户ID='" + textBox4.Text + "',性别='" + textBox2.Text + "',身份证号='" + textBox8.Text + "',出生日期='" + textBox7.Text + "',联系方式='" + textBox6.Text + "',工作单位='" + textBox5.Text + "',地址='" + textBox3.Text + "',邮编='" + textBox9.Text + "',EMALL='" + textBox10.Text + "'where 姓名='" + textBox1.Text + "'";
+            com.ExecuteNonQuery();
+            MessageBox.Show("修改信息成功！");
+            con.Close();
+        }
+    }
+}
