@@ -1,0 +1,34 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using System.Data.SqlClient;
+
+namespace UIL.车辆信息
+{
+    public partial class 修改车辆信息 : Form
+    {
+        public 修改车辆信息()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = "Data Source=(local),1433;Initial Catalog=租车管理系统;Trusted_connection=yes";
+            con.Open();
+            SqlCommand com = new SqlCommand();
+            com.Connection = con;
+            com.CommandType = CommandType.Text;
+            com.CommandText = "update 车辆信息 set 发动机号='" + textBox2.Text + "',车架编号='" + textBox8.Text + "',门店ID='" + textBox6.Text + "',名称='" + textBox5.Text + "',颜色='" + textBox3.Text + "',购买日期='" + textBox9.Text + "',销售商='" + textBox10.Text + "',状态='"+textBox11.Text+"'where 车牌号码='" + textBox1.Text + "'";
+            com.ExecuteNonQuery();
+            MessageBox.Show("修改信息成功！");
+            con.Close();
+        }
+    }
+}
