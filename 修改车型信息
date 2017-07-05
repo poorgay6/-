@@ -1,0 +1,34 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using System.Data.SqlClient;
+
+namespace UIL.车型信息
+{
+    public partial class 修改车型信息 : Form
+    {
+        public 修改车型信息()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = "Data Source=(local),1433;Initial Catalog=租车管理系统;Trusted_connection=yes";
+            con.Open();
+            SqlCommand com = new SqlCommand();
+            com.Connection = con;
+            com.CommandType = CommandType.Text;
+            com.CommandText = "update 车型信息 set 燃油类型='" + textBox4.Text + "',燃油编号='" + textBox8.Text + "',载客人数='" + textBox7.Text + "',日租金='" + textBox6.Text + "',[超时费用/天]='" + textBox5.Text + "',[额定行驶里程/天]='" + textBox3.Text + "',超公里费用='" + textBox9.Text + "',车损押金='" + textBox10.Text + "',违章押金='" + textBox11.Text + "',使用押金='" + textBox12.Text + "'where 车型='" + textBox2.Text + "'";
+            com.ExecuteNonQuery();
+            MessageBox.Show("修改信息成功！");
+            con.Close();
+        }
+    }
+}
